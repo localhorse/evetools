@@ -45,7 +45,7 @@ def index(request):
         message = "You are not logged in."
 
     context = RequestContext(request)
-    return render_to_response('index.html', {'message': message, 'characters': characters}, context)
+    return render_to_response('evetools/index.html', {'message': message, 'characters': characters}, context)
 
 def char_page(request, user_id, api_num, char_num):
 
