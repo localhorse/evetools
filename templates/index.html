@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block head_title %}EVE tools test{% endblock %}
+{% block body_title %}EVE tools test{% endblock %}
+
+{% block col_left %}
+
+{{ message }}<br />
+
+<script type="text/javascript">
+
+// if javascript is active, we won't be using the regular view and therefore we don't want these links to be active - we'll disable them on page load/unload/ready...
+
+$(window).load(function() {
+                 clear_messages();
+                 disable_links();
+              });
+
+$(window).unload(function() {
+                   clear_messages();
+                   disable_links();
+                });
+
+$(document).ready(function() {
+                    clear_messages();
+                    disable_links();
+                  });
+
+function loading_message(char) {
+  $(document.getElementById(char)).html("<br />(loading...)<br /><br />");
+}
+
+function load_char(char, link) {
+  loading_message(char);
+  $.get(link, function(raw_json) {
+          // JSON.parse() only on firefox/chrome/safari/ie8?
+          json_obj = JSON.parse(raw_json);
+          // collapse the other entries first
+          clear_messages();
+          $(document.getElementById(char)).html("<br /><img src='" + json_obj.img_url + "'></img><br /><b>" + json_obj.wallet_msg + "</b><br /><br />");
+  });
+}
+
+function disable_links() {
+  $("a.char_link").attr("href", "javascript:void(0)");
+}
+
+function clear_messages() {
+  $("div.load_msg").html("");
+}
+
+function toggle_char(char, link) {
+  if ($(document.getElementById(char)).html()) {
+    $(document.getElementById(char)).html("");
+  } else {
+    load_char(char, link);
+  }
+}
+
+</script>
+
+  <!-- should probably make it so the first initial character list request is done through AJAX as well, and tells the user when it's loading (even listing each character dynamically as it loads -->
+
+{% if characters %}
+<ul>
+{% for char, link in characters.items %}
+<li><a class="char_link" href="{{ link }}" onclick="toggle_char('{{ char }}', '{{ link }}')">[{{ char }}]</a><div id="{{ char }}" class="load_msg"></div></li>
+{% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block head_title %}EVE character page{% endblock %}
+{% block body_title %}EVE character page{% endblock %}
+
+{% block col_left %}
+
+{% if message %}
+{{ message }}<br /><br />
+{% endif %}
+
+{% if img_url %}
+<img src="{{ img_url }}"><br />
+{% endif %}
+
+{% if char_name %}
+<em>{{ char_name }}</em><br />
+{% endif %}
+
+{% if wallet_msg %}
+<b>{{ wallet_msg }}</b><br />
+{% endif %}
+
+{% endblock %}
