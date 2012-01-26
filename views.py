@@ -13,17 +13,7 @@ from django.utils import simplejson
 
 from noware.evetools import util
 
-##from noware.apachelogger import CustomApacheLogger
-
-# auth.account.Characters
-# auth.account.APIKeyInfo
-# auth.char.AccountBalance
-
 def index(request):
-
-    ##apache_logger = CustomApacheLogger(True)
-    ##apache_logger.log("Setup logging object (index view).")
-    ##apache_logger.log("%s (index)" % ('HTTP_X_REQUESTED_WITH' in request.META))
 
     characters = {}
 
@@ -48,10 +38,6 @@ def index(request):
     return render_to_response('evetools/index.html', {'message': message, 'characters': characters}, context)
 
 def char_page(request, user_id, api_num, char_num):
-
-    ##apache_logger = CustomApacheLogger(True)
-    ##apache_logger.log("Setup logging object (char_page view).")
-    ##apache_logger.log("%s (char_page)" % ('HTTP_X_REQUESTED_WITH' in request.META))
 
     if request.user.is_authenticated():
 
